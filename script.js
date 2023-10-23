@@ -1,4 +1,4 @@
-const myLibrary = [book1, book2];
+const myLibrary = [];
 
 function Book(title, author, numberOfPages, wasRead) {
   this.title = title;
@@ -6,15 +6,16 @@ function Book(title, author, numberOfPages, wasRead) {
   this.numberOfPages = numberOfPages;
   this.wasRead = wasRead;
   this.info = function () {
-    return `${title} by ${author}, ${numberOfPages} pages, ` + wasRead
-      ? "not read yet"
-      : "read already";
+    return (
+      `${title} by ${author}, ${numberOfPages} pages, ` +
+      (wasRead ? "read already" : "not read yet")
+    );
   };
 }
 
 function addBookToLibrary() {}
 
-function showBooks(books) {}
+// function showBooks(books) {}
 
-const btn = document.querySelector("#btn");
-btn.addEventListener("click", addBookToLibrary);
+// const btn = document.querySelector("#btn");
+// btn.addEventListener("click", addBookToLibrary);
