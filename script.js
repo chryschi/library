@@ -27,7 +27,7 @@ function Book(title, author, numberOfPages, wasRead) {
 }
 
 function addBookToLibrary(userInput) {
-  myLibrary.append(userInput);
+  myLibrary.push(userInput);
 }
 
 function showBooksInLibrary(myLibrary) {
