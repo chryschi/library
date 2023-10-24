@@ -1,4 +1,4 @@
-const myLibrary = [];
+var myLibrary = [];
 
 function Book(title, author, numberOfPages, wasRead) {
   this.title = title;
@@ -13,7 +13,9 @@ function Book(title, author, numberOfPages, wasRead) {
   };
 }
 
-function addBookToLibrary() {}
+function addBookToLibrary(userInput) {
+  myLibrary.append(userInput);
+}
 
 // function showBooks(books) {}
 
