@@ -1,4 +1,17 @@
-var myLibrary = [];
+let myLibrary = [
+  // {
+  //   title: "Hello Kitty",
+  //   author: "KITTENS",
+  //   numberofPages: 5,
+  //   wasRead: true,
+  // },
+  // {
+  //   title: "Graves, The Lonely Knight",
+  //   author: "Humma",
+  //   numberofPages: 10,
+  //   wasRead: false,
+  // },
+];
 
 function Book(title, author, numberOfPages, wasRead) {
   this.title = title;
@@ -17,7 +30,14 @@ function addBookToLibrary(userInput) {
   myLibrary.append(userInput);
 }
 
-// function showBooks(books) {}
+function showBooksInLibrary(myLibrary) {
+  for (let i = 0; i < myLibrary.length; i++) {
+    const bookCard = document.createElement("div");
+    bookCard.setAttribute("id", `${i}`);
+    bookCard.textContent = `${myLibrary[i].info()}`;
+    document.body.appendChild(bookCard);
+  }
+}
 
 // const btn = document.querySelector("#btn");
 // btn.addEventListener("click", addBookToLibrary);
