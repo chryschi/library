@@ -35,6 +35,7 @@ function addBook(e) {
   transformIteratorToObject(bookIterator);
   createBookFromObject(bookObject);
   addBookToLibrary(bookToAdd);
+  showBooksInLibrary();
   closeForm();
 }
 
@@ -71,22 +72,26 @@ function addBookToLibrary(book) {
   console.log(myLibrary);
 }
 
-function closeForm() {
-  bookDialog.close();
+function showBooksInLibrary(myLibrary) {
+  if (myLibrary.length !== undefined) {
+    for (let i = 0; i < myLibrary.length; i++) {
+      const bookCard = document.createElement("div");
+      bookCard.setAttribute("id", `${i}`);
+      bookCard.textContent = `${myLibrary[i].info()}`;
+      document.body.appendChild(bookCard);
+    }
+  }
 }
 
-function showBooksInLibrary(myLibrary) {
-  for (let i = 0; i < myLibrary.length; i++) {
-    const bookCard = document.createElement("div");
-    bookCard.setAttribute("id", `${i}`);
-    bookCard.textContent = `${myLibrary[i].info()}`;
-    document.body.appendChild(bookCard);
-  }
+function closeForm() {
+  bookDialog.close();
 }
 
 function openBookForm() {
   bookDialog.showModal();
 }
+
+showBooksInLibrary(myLibrary);
 
 const btnNewBook = document.createElement("button");
 btnNewBook.textContent = "NEW BOOK";
