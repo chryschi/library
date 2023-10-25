@@ -46,5 +46,5 @@ function showBooksInLibrary(myLibrary) {
 
 const btnNewBook = document.createElement("button");
 btnNewBook.textContent = "NEW BOOK";
-// btnNewBook.addEventListener("click", openForm);
+btnNewBook.addEventListener("click", openBookForm);
 document.body.appendChild(btnNewBook);
