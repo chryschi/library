@@ -35,6 +35,7 @@ function addBook(e) {
   transformIteratorToObject(bookIterator);
   createBookFromObject(bookObject);
   addBookToLibrary(bookToAdd);
+  closeForm();
 }
 
 function transformFormValuesToIterator(e) {
@@ -70,9 +71,9 @@ function addBookToLibrary(book) {
   console.log(myLibrary);
 }
 
-// function closeForm() {
-//   bookDialog.close();
-// }
+function closeForm() {
+  bookDialog.close();
+}
 
 function showBooksInLibrary(myLibrary) {
   for (let i = 0; i < myLibrary.length; i++) {
