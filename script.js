@@ -35,7 +35,7 @@ function addBook(e) {
   transformIteratorToObject(bookIterator);
   createBookFromObject(bookObject);
   addBookToLibrary(bookToAdd);
-  showBooksInLibrary();
+  showBooksInLibrary(myLibrary);
   closeForm();
 }
 
@@ -74,12 +74,19 @@ function addBookToLibrary(book) {
 
 function showBooksInLibrary(myLibrary) {
   if (myLibrary !== undefined) {
+    clearLibraryDisplay();
     for (let i = 0; i < myLibrary.length; i++) {
       const bookCard = document.createElement("div");
       bookCard.setAttribute("id", `${i}`);
       bookCard.textContent = `${myLibrary[i].info()}`;
-      document.body.appendChild(bookCard);
+      library.appendChild(bookCard);
     }
+  }
+}
+
+function clearLibraryDisplay() {
+  while (library.firstChild !== null) {
+    library.removeChild(library.lastChild);
   }
 }
 
@@ -91,7 +98,7 @@ function openBookForm() {
   bookDialog.showModal();
 }
 
-showBooksInLibrary(myLibrary);
+const library = document.querySelector("#library");
 
 const btnNewBook = document.createElement("button");
 btnNewBook.textContent = "NEW BOOK";
@@ -104,4 +111,5 @@ const bookForm = document.querySelector("form");
 const btnAddBook = document.querySelector("#addBookButton");
 btnAddBook.addEventListener("click", (e) => addBook(e));
 
+showBooksInLibrary(myLibrary);
 // bookForm.addEventListener("submit", (e) => addBook(e));
