@@ -95,7 +95,12 @@ function closeForm() {
 }
 
 function openBookForm() {
+  resetForm();
   bookDialog.showModal();
+}
+
+function resetForm() {
+  bookForm.reset();
 }
 
 const library = document.querySelector("#library");
