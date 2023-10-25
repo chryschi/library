@@ -26,14 +26,53 @@ function Book(title, author, numberOfPages, wasRead) {
   };
 }
 
-function openBookForm() {
-  const bookForm = document.querySelector("#bookForm");
-  bookForm.showModal();
+// let bookData;
+let bookObject = {};
+let bookToAdd;
+
+function addBook(e) {
+  const bookIterator = transformFormValuesToIterator(e);
+  transformIteratorToObject(bookIterator);
+  createBookFromObject(bookObject);
+  addBookToLibrary(bookToAdd);
 }
 
-function addBookToLibrary(userInput) {
-  myLibrary.push(userInput);
+function transformFormValuesToIterator(e) {
+  e.preventDefault();
+  const bookDataIterator = new FormData(bookForm);
+  for (let entry of bookDataIterator.entries()) {
+    console.log(entry);
+  }
+  return bookDataIterator;
 }
+
+function transformIteratorToObject(bookIterator) {
+  for (const bookAttributePair of bookIterator.entries()) {
+    const attributeName = bookAttributePair[0];
+    const attributeValue = bookAttributePair[1];
+    bookObject[`${attributeName}`] = attributeValue;
+  }
+  console.log(bookObject);
+}
+
+function createBookFromObject(bookObject) {
+  bookToAdd = new Book(
+    bookObject.title,
+    bookObject.author,
+    bookObject.numberOfPages,
+    bookObject.wasRead
+  );
+  console.log(bookToAdd);
+}
+
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+  console.log(myLibrary);
+}
+
+// function closeForm() {
+//   bookDialog.close();
+// }
 
 function showBooksInLibrary(myLibrary) {
   for (let i = 0; i < myLibrary.length; i++) {
@@ -44,7 +83,19 @@ function showBooksInLibrary(myLibrary) {
   }
 }
 
+function openBookForm() {
+  bookDialog.showModal();
+}
+
 const btnNewBook = document.createElement("button");
 btnNewBook.textContent = "NEW BOOK";
 btnNewBook.addEventListener("click", openBookForm);
 document.body.appendChild(btnNewBook);
+
+const bookDialog = document.querySelector("#bookDialog");
+const bookForm = document.querySelector("form");
+
+const btnAddBook = document.querySelector("#addBookButton");
+btnAddBook.addEventListener("click", (e) => addBook(e));
+
+// bookForm.addEventListener("submit", (e) => addBook(e));

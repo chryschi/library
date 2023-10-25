@@ -7,7 +7,7 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <dialog id="bookForm">
+    <dialog id="bookDialog">
       <form>
         <label for="book_title">Title</label>
         <input type="text" id="book_title" name="title" />
@@ -18,21 +18,25 @@
         <label for="number_pages">Pages</label>
         <input type="number" id="number_pages" name="numberOfPages" />
 
-        <label for="book_read">Read?</label>
+        <p>Read?</p>
 
         <div>
           <input type="radio" id="book_read" name="wasRead" value="true" />
-          <label for="read">Yes</label>
+          <label for="book_read">Yes</label>
         </div>
         <div>
           <input
             type="radio"
-            id="book_read"
+            id="book_not_read"
             name="wasRead"
             value="false"
             checked
           />
-          <label for="not_read">No</label>
+          <label for="book_not_read">No</label>
+        </div>
+        <div>
+          <button value="cancel" formmethod="dialog">Cancel</button>
+          <button type="button" id="addBookButton">ADD BOOK</button>
         </div>
       </form>
     </dialog>
