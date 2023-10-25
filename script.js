@@ -26,6 +26,11 @@ function Book(title, author, numberOfPages, wasRead) {
   };
 }
 
+function openBookForm() {
+  const bookForm = document.querySelector("#bookForm");
+  bookForm.showModal();
+}
+
 function addBookToLibrary(userInput) {
   myLibrary.push(userInput);
 }
@@ -41,5 +46,5 @@ function showBooksInLibrary(myLibrary) {
 
 const btnNewBook = document.createElement("button");
 btnNewBook.textContent = "NEW BOOK";
-// btnNewBook.addEventListener("click", addBookToLibrary);
+// btnNewBook.addEventListener("click", openForm);
 document.body.appendChild(btnNewBook);
