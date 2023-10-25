@@ -39,5 +39,7 @@ function showBooksInLibrary(myLibrary) {
   }
 }
 
-// const btn = document.querySelector("#btn");
-// btn.addEventListener("click", addBookToLibrary);
+const btnNewBook = document.createElement("button");
+btnNewBook.textContent = "NEW BOOK";
+// btnNewBook.addEventListener("click", addBookToLibrary);
+document.body.appendChild(btnNewBook);
