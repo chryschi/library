@@ -73,7 +73,7 @@ function addBookToLibrary(book) {
 }
 
 function showBooksInLibrary(myLibrary) {
-  if (myLibrary.length !== undefined) {
+  if (myLibrary !== undefined) {
     for (let i = 0; i < myLibrary.length; i++) {
       const bookCard = document.createElement("div");
       bookCard.setAttribute("id", `${i}`);
