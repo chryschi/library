@@ -75,14 +75,20 @@ function addBookToLibrary(book) {
 function showBooksInLibrary(myLibrary) {
   if (myLibrary !== undefined) {
     clearLibraryDisplay();
-    for (let i = 0; i < myLibrary.length; i++) {
-      const bookCard = document.createElement("div");
-      bookCard.setAttribute("id", `${i}`);
-      bookCard.textContent = `${myLibrary[i].info()}`;
-      library.appendChild(bookCard);
-    }
+    iterateAndAppendBooks(myLibrary);
   }
 }
+
+function iterateAndAppendBooks(myLibrary) {
+  for (let i = 0; i < myLibrary.length; i++) {
+    const bookCard = document.createElement("div");
+    bookCard.setAttribute("id", `${i}`);
+    bookCard.textContent = `${myLibrary[i].info()}`;
+    library.appendChild(bookCard);
+  }
+}
+
+function addBookDeleteButton() {}
 
 function clearLibraryDisplay() {
   while (library.firstChild !== null) {
