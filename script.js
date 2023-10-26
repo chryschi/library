@@ -75,7 +75,7 @@ function addBookToLibrary(book) {
 function showBooksInLibrary(myLibrary) {
   if (myLibrary !== undefined) {
     clearLibraryDisplay();
-    iterateAndAppendBooks(myLibrary);
+    iterateAndDisplayBooks(myLibrary);
   }
 }
 
@@ -85,27 +85,35 @@ function clearLibraryDisplay() {
   }
 }
 
-function iterateAndAppendBooks(myLib) {
+function iterateAndDisplayBooks(myLib) {
   for (let bookIndex = 0; bookIndex < myLib.length; bookIndex++) {
-    const bookCard = document.createElement("div");
-    bookCard.setAttribute("id", `${bookIndex}`);
-    bookCard.textContent = `${myLib[bookIndex].info()}`;
-    library.appendChild(bookCard);
-
-    const deleteBookButton = document.createElement("button");
-    deleteBookButton.addEventListener("click", (e) => {
-      const bookIndex = e.target.parentNode.id;
-      const targetBookCard = document.getElementById(`${bookIndex}`);
-      myLibrary.splice(`${bookIndex}`, 1);
-      console.log(myLibrary);
-      targetBookCard.remove();
-    });
-    deleteBookButton.textContent = "DELETE";
-    bookCard.appendChild(deleteBookButton);
+    setupBookCard(bookIndex);
+    setupBookDeleteButton(bookIndex);
   }
 }
 
-function addBookDeleteButton() {}
+function setupBookCard(bookIndex) {
+  const bookCard = document.createElement("div");
+  bookCard.setAttribute("id", `${bookIndex}`);
+  bookCard.textContent = `${myLibrary[bookIndex].info()}`;
+  library.appendChild(bookCard);
+}
+
+function setupBookDeleteButton(bookIndex) {
+  const deleteBookButton = document.createElement("button");
+  const bookCard = document.getElementById(`${bookIndex}`);
+  deleteBookButton.addEventListener("click", (e) => deleteBookCard(e));
+  deleteBookButton.textContent = "DELETE";
+  bookCard.appendChild(deleteBookButton);
+}
+
+function deleteBookCard(e) {
+  const bookIndex = e.target.parentNode.id;
+  const targetBookCard = document.getElementById(`${bookIndex}`);
+  myLibrary.splice(`${bookIndex}`, 1);
+  console.log(myLibrary);
+  targetBookCard.remove();
+}
 
 function closeForm() {
   bookDialog.close();
@@ -134,4 +142,3 @@ const btnAddBook = document.querySelector("#addBookButton");
 btnAddBook.addEventListener("click", (e) => addBook(e));
 
 showBooksInLibrary(myLibrary);
-// bookForm.addEventListener("submit", (e) => addBook(e));
