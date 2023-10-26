@@ -79,22 +79,33 @@ function showBooksInLibrary(myLibrary) {
   }
 }
 
-function iterateAndAppendBooks(myLibrary) {
-  for (let i = 0; i < myLibrary.length; i++) {
-    const bookCard = document.createElement("div");
-    bookCard.setAttribute("id", `${i}`);
-    bookCard.textContent = `${myLibrary[i].info()}`;
-    library.appendChild(bookCard);
-  }
-}
-
-function addBookDeleteButton() {}
-
 function clearLibraryDisplay() {
   while (library.firstChild !== null) {
     library.removeChild(library.lastChild);
   }
 }
+
+function iterateAndAppendBooks(myLib) {
+  for (let bookIndex = 0; bookIndex < myLib.length; bookIndex++) {
+    const bookCard = document.createElement("div");
+    bookCard.setAttribute("id", `${bookIndex}`);
+    bookCard.textContent = `${myLib[bookIndex].info()}`;
+    library.appendChild(bookCard);
+
+    const deleteBookButton = document.createElement("button");
+    deleteBookButton.addEventListener("click", (e) => {
+      const bookIndex = e.target.parentNode.id;
+      const targetBookCard = document.getElementById(`${bookIndex}`);
+      myLibrary.splice(`${bookIndex}`, 1);
+      console.log(myLibrary);
+      targetBookCard.remove();
+    });
+    deleteBookButton.textContent = "DELETE";
+    bookCard.appendChild(deleteBookButton);
+  }
+}
+
+function addBookDeleteButton() {}
 
 function closeForm() {
   bookDialog.close();
