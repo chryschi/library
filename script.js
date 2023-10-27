@@ -20,13 +20,13 @@ function Book(title, author, numberOfPages, wasRead) {
   this.wasRead = wasRead;
   this.info = function () {
     return (
-      `${title} by ${author}, ${numberOfPages} pages, ` +
-      (wasRead ? "read already" : "not read yet")
+      `${this.title} by ${this.author}, ${this.numberOfPages} pages, ` +
+      (this.wasRead ? "read already" : "not read yet")
     );
   };
-  // this.switchReadStatus = function () {
-  //   this.wasRead = !this.wasRead;
-  // };
+  this.switchReadStatus = function () {
+    this.wasRead = !this.wasRead;
+  };
 }
 
 // let bookData;
@@ -130,11 +130,12 @@ function setupSwitchReadButton(bookIndex, bookCard) {
   console.log(myLibrary[bookIndex].wasRead);
   switchReadButton.addEventListener("click", (e) => {
     const bookIndex = e.target.parentNode.id;
-    myLibrary[bookIndex].wasRead = !myLibrary[bookIndex].wasRead;
-    switchReadButton.textContent = myLibrary[bookIndex].wasRead
-      ? "Not Read"
-      : "Read";
-    console.log(myLibrary[bookIndex].wasRead);
+    const targetBook = myLibrary[bookIndex];
+    const bookCard = selectBookCard(bookIndex);
+
+    targetBook.switchReadStatus();
+    switchReadButton.textContent = targetBook.wasRead ? "Not Read" : "Read";
+    bookCard.firstChild.textContent = targetBook.info();
   });
   bookCard.appendChild(switchReadButton);
 }
