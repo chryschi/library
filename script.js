@@ -16,6 +16,22 @@ function Book(title, author, numberOfPages, wasRead) {
   };
 }
 
+function createBook(title, author, numberOfPages, wasRead) {
+  const pages = numberOfPages + "pages";
+
+  const convertReadToBoolean = () => {
+    wasRead = wasRead === "true" ? true : false;
+  };
+
+  convertReadToBoolean();
+
+  const readDisplay = () => (wasRead ? "read already" : "not read yet");
+
+  const info = () => `${title} by ${author}, ${pages}, ${readDisplay()}`;
+
+  return { title, author, numberOfPages, wasRead };
+}
+
 let bookObject = {};
 let bookToAdd;
 
