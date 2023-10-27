@@ -1,17 +1,4 @@
-let myLibrary = [
-  // {
-  //   title: "Hello Kitty",
-  //   author: "KITTENS",
-  //   numberofPages: 5,
-  //   wasRead: true,
-  // },
-  // {
-  //   title: "Graves, The Lonely Knight",
-  //   author: "Humma",
-  //   numberofPages: 10,
-  //   wasRead: false,
-  // },
-];
+let myLibrary = [];
 
 function Book(title, author, numberOfPages, wasRead) {
   this.title = title;
@@ -29,7 +16,6 @@ function Book(title, author, numberOfPages, wasRead) {
   };
 }
 
-// let bookData;
 let bookObject = {};
 let bookToAdd;
 
@@ -128,16 +114,20 @@ function setupSwitchReadButton(bookIndex, bookCard) {
     ? "Not Read"
     : "Read";
   console.log(myLibrary[bookIndex].wasRead);
-  switchReadButton.addEventListener("click", (e) => {
-    const bookIndex = e.target.parentNode.id;
-    const targetBook = myLibrary[bookIndex];
-    const bookCard = selectBookCard(bookIndex);
-
-    targetBook.switchReadStatus();
-    switchReadButton.textContent = targetBook.wasRead ? "Not Read" : "Read";
-    bookCard.firstChild.textContent = targetBook.info();
-  });
+  switchReadButton.addEventListener("click", (e) =>
+    changeBookCardReadState(e, switchReadButton)
+  );
   bookCard.appendChild(switchReadButton);
+}
+
+function changeBookCardReadState(e, switchReadButton) {
+  const bookIndex = e.target.parentNode.id;
+  const targetBook = myLibrary[bookIndex];
+  const bookCard = selectBookCard(bookIndex);
+
+  targetBook.switchReadStatus();
+  switchReadButton.textContent = targetBook.wasRead ? "Not Read" : "Read";
+  bookCard.firstChild.textContent = targetBook.info();
 }
 
 function openBookForm() {
@@ -158,4 +148,4 @@ const bookForm = document.querySelector("form");
 const btnAddBook = document.querySelector("#addBookButton");
 btnAddBook.addEventListener("click", (e) => addBook(e));
 
-showBooksInLibrary(myLibrary);
+// showBooksInLibrary(myLibrary);
