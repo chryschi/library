@@ -24,6 +24,9 @@ function Book(title, author, numberOfPages, wasRead) {
       (wasRead ? "read already" : "not read yet")
     );
   };
+  // this.switchReadStatus = function () {
+  //   this.wasRead = !this.wasRead;
+  // };
 }
 
 // let bookData;
@@ -62,7 +65,7 @@ function createBookFromObject(bookObject) {
     bookObject.title,
     bookObject.author,
     bookObject.numberOfPages,
-    bookObject.wasRead
+    bookObject.wasRead === "true" ? true : false
   );
   console.log(bookToAdd);
 }
@@ -88,7 +91,9 @@ function clearLibraryDisplay() {
 function iterateAndDisplayBooks() {
   for (let bookIndex = 0; bookIndex < myLibrary.length; bookIndex++) {
     setupBookCard(bookIndex);
-    setupBookDeleteButton(bookIndex);
+    const bookCard = selectBookCard(bookIndex);
+    setupBookDeleteButton(bookCard);
+    setupSwitchReadButton(bookIndex, bookCard);
   }
 }
 
@@ -98,10 +103,12 @@ function setupBookCard(bookIndex) {
   bookCard.textContent = `${myLibrary[bookIndex].info()}`;
   libraryContainer.appendChild(bookCard);
 }
+function selectBookCard(bookIndex) {
+  return document.getElementById(`${bookIndex}`);
+}
 
-function setupBookDeleteButton(bookIndex) {
+function setupBookDeleteButton(bookCard) {
   const deleteBookButton = document.createElement("button");
-  const bookCard = document.getElementById(`${bookIndex}`);
   deleteBookButton.addEventListener("click", (e) => deleteBookCard(e));
   deleteBookButton.textContent = "DELETE";
   bookCard.appendChild(deleteBookButton);
@@ -113,6 +120,23 @@ function deleteBookCard(e) {
   myLibrary.splice(`${bookIndex}`, 1);
   console.log(myLibrary);
   targetBookCard.remove();
+}
+
+function setupSwitchReadButton(bookIndex, bookCard) {
+  const switchReadButton = document.createElement("button");
+  switchReadButton.textContent = myLibrary[bookIndex].wasRead
+    ? "Not Read"
+    : "Read";
+  console.log(myLibrary[bookIndex].wasRead);
+  switchReadButton.addEventListener("click", (e) => {
+    const bookIndex = e.target.parentNode.id;
+    myLibrary[bookIndex].wasRead = !myLibrary[bookIndex].wasRead;
+    switchReadButton.textContent = myLibrary[bookIndex].wasRead
+      ? "Not Read"
+      : "Read";
+    console.log(myLibrary[bookIndex].wasRead);
+  });
+  bookCard.appendChild(switchReadButton);
 }
 
 function openBookForm() {
