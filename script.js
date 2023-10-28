@@ -1,20 +1,32 @@
 let myLibrary = [];
-
-function createBook(title, author, numberOfPages, wasRead) {
-  const pages = numberOfPages + "pages";
-
-  wasRead = wasRead === "true" ? true : false;
-
-  const readInfo = () => (wasRead ? "read already" : "not read yet");
-
-  const info = () => `${title} by ${author}, ${pages}, ${readInfo()}`;
-  const switchReadStatus = () => (wasRead = !wasRead);
-
-  return { info, switchReadStatus };
-}
-
 let bookObject = {};
 let bookToAdd;
+
+const libraryContainer = document.querySelector("#library-container");
+
+const btnNewBook = document.createElement("button");
+btnNewBook.textContent = "NEW BOOK";
+btnNewBook.addEventListener("click", openBookForm);
+document.body.appendChild(btnNewBook);
+
+const bookDialog = document.querySelector("#bookDialog");
+const bookForm = document.querySelector("form");
+
+const btnAddBook = document.querySelector("#addBookButton");
+btnAddBook.addEventListener("click", (e) => addBook(e));
+
+function createBook(title, author, numberOfPages, wasRead) {
+  let readState = wasRead === "true" ? true : false;
+
+  const pages = numberOfPages + " pages";
+  const readInfo = () => (readState ? "read already" : "not read yet");
+
+  const info = () => `${title} by ${author}, ${pages}, ${readInfo()}`;
+  const switchReadState = () => (readState = !readState);
+  const getReadButtonContent = () => (readState ? "Not Read" : "Read");
+
+  return { info, switchReadState, getReadButtonContent };
+}
 
 function addBook(e) {
   const bookIterator = transformFormValuesToIterator(e);
@@ -50,7 +62,7 @@ function createBookFromObject(bookObject) {
     bookObject.numberOfPages,
     bookObject.wasRead
   );
-  console.log(bookToAdd.wasRead);
+  console.log(bookToAdd.getReadButtonContent());
 }
 
 function addBookToLibrary(book) {
@@ -74,9 +86,19 @@ function clearLibraryDisplay() {
 function iterateAndDisplayBooks() {
   for (let bookIndex = 0; bookIndex < myLibrary.length; bookIndex++) {
     setupBookCard(bookIndex);
+
     const bookCard = selectBookCard(bookIndex);
-    setupBookDeleteButton(bookCard);
-    setupSwitchReadButton(bookIndex, bookCard);
+    const bookReadStatus = myLibrary[bookIndex].getReadButtonContent();
+    const targetBook = myLibrary[bookIndex];
+
+    createButton("DELETE", "click", (e) => deleteBookCard(e), bookCard);
+    const toggleReadStatusButton = createButton(
+      bookReadStatus,
+      "click",
+      () =>
+        changeBookCardReadState(targetBook, toggleReadStatusButton, bookCard),
+      bookCard
+    );
   }
 }
 
@@ -86,15 +108,9 @@ function setupBookCard(bookIndex) {
   bookCard.textContent = `${myLibrary[bookIndex].info()}`;
   libraryContainer.appendChild(bookCard);
 }
+
 function selectBookCard(bookIndex) {
   return document.getElementById(`${bookIndex}`);
-}
-
-function setupBookDeleteButton(bookCard) {
-  const deleteBookButton = document.createElement("button");
-  deleteBookButton.addEventListener("click", (e) => deleteBookCard(e));
-  deleteBookButton.textContent = "DELETE";
-  bookCard.appendChild(deleteBookButton);
 }
 
 function deleteBookCard(e) {
@@ -105,25 +121,10 @@ function deleteBookCard(e) {
   targetBookCard.remove();
 }
 
-function setupSwitchReadButton(bookIndex, bookCard) {
-  const switchReadButton = document.createElement("button");
-  switchReadButton.textContent = myLibrary[bookIndex].wasRead
-    ? "Not Read"
-    : "Read";
-  console.log(myLibrary[bookIndex].wasRead);
-  switchReadButton.addEventListener("click", (e) =>
-    changeBookCardReadState(e, switchReadButton)
-  );
-  bookCard.appendChild(switchReadButton);
-}
-
-function changeBookCardReadState(e, switchReadButton) {
-  const bookIndex = e.target.parentNode.id;
-  const targetBook = myLibrary[bookIndex];
-  const bookCard = selectBookCard(bookIndex);
-
-  targetBook.switchReadStatus();
-  switchReadButton.textContent = targetBook.wasRead ? "Not Read" : "Read";
+function changeBookCardReadState(targetBook, readStateButton, bookCard) {
+  targetBook.switchReadState();
+  console.log(targetBook.getReadButtonContent());
+  readStateButton.setContent(targetBook.getReadButtonContent());
   bookCard.firstChild.textContent = targetBook.info();
 }
 
@@ -132,17 +133,29 @@ function openBookForm() {
   bookDialog.showModal();
 }
 
-const libraryContainer = document.querySelector("#library-container");
+function createButton(
+  initialContent,
+  buttonEvent,
+  functionExpression,
+  parentNode
+) {
+  const element = document.createElement("button");
+  element.textContent = initialContent;
+  element.addEventListener(buttonEvent, functionExpression);
+  parentNode.appendChild(element);
 
-const btnNewBook = document.createElement("button");
-btnNewBook.textContent = "NEW BOOK";
-btnNewBook.addEventListener("click", openBookForm);
-document.body.appendChild(btnNewBook);
+  const setContent = (newContent) => {
+    element.textContent = newContent;
+  };
 
-const bookDialog = document.querySelector("#bookDialog");
-const bookForm = document.querySelector("form");
+  return { element, setContent };
+}
 
-const btnAddBook = document.querySelector("#addBookButton");
-btnAddBook.addEventListener("click", (e) => addBook(e));
+// function createBookCard(bookIndex) {
+//   const element = document.createElement("div");
+//   element.setAttribute("id", `${bookIndex}`);
+//   element.textContent = `${myLibrary[bookIndex].info()}`;
+//   libraryContainer.appendChild(element);
 
-// showBooksInLibrary(myLibrary);
+//   return {element, }
+// }
