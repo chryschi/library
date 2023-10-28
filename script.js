@@ -1,35 +1,16 @@
 let myLibrary = [];
 
-function Book(title, author, numberOfPages, wasRead) {
-  this.title = title;
-  this.author = author;
-  this.numberOfPages = numberOfPages;
-  this.wasRead = wasRead;
-  this.info = function () {
-    return (
-      `${this.title} by ${this.author}, ${this.numberOfPages} pages, ` +
-      (this.wasRead ? "read already" : "not read yet")
-    );
-  };
-  this.switchReadStatus = function () {
-    this.wasRead = !this.wasRead;
-  };
-}
-
 function createBook(title, author, numberOfPages, wasRead) {
   const pages = numberOfPages + "pages";
 
-  const convertReadToBoolean = () => {
-    wasRead = wasRead === "true" ? true : false;
-  };
+  wasRead = wasRead === "true" ? true : false;
 
-  convertReadToBoolean();
+  const readInfo = () => (wasRead ? "read already" : "not read yet");
 
-  const readDisplay = () => (wasRead ? "read already" : "not read yet");
+  const info = () => `${title} by ${author}, ${pages}, ${readInfo()}`;
+  const switchReadStatus = () => (wasRead = !wasRead);
 
-  const info = () => `${title} by ${author}, ${pages}, ${readDisplay()}`;
-
-  return { title, author, numberOfPages, wasRead };
+  return { info, switchReadStatus };
 }
 
 let bookObject = {};
@@ -63,13 +44,13 @@ function transformIteratorToObject(bookIterator) {
 }
 
 function createBookFromObject(bookObject) {
-  bookToAdd = new Book(
+  bookToAdd = createBook(
     bookObject.title,
     bookObject.author,
     bookObject.numberOfPages,
-    bookObject.wasRead === "true" ? true : false
+    bookObject.wasRead
   );
-  console.log(bookToAdd);
+  console.log(bookToAdd.wasRead);
 }
 
 function addBookToLibrary(book) {
