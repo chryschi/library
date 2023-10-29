@@ -4,10 +4,12 @@ let bookToAdd;
 
 const libraryContainer = document.querySelector("#library-container");
 
-const btnNewBook = document.createElement("button");
-btnNewBook.textContent = "NEW BOOK";
-btnNewBook.addEventListener("click", openBookForm);
-document.body.appendChild(btnNewBook);
+const newBookButton = createButton(
+  "NEW BOOK",
+  "click",
+  openBookForm,
+  document.body
+);
 
 const bookDialog = document.querySelector("#bookDialog");
 const bookForm = document.querySelector("form");
@@ -85,11 +87,9 @@ function clearLibraryDisplay() {
 
 function iterateAndDisplayBooks() {
   for (let bookIndex = 0; bookIndex < myLibrary.length; bookIndex++) {
-    setupBookCard(bookIndex);
-
-    const bookCard = selectBookCard(bookIndex);
-    const bookReadStatus = myLibrary[bookIndex].getReadButtonContent();
+    const bookCard = createBookCard(bookIndex).element;
     const targetBook = myLibrary[bookIndex];
+    const bookReadStatus = targetBook.getReadButtonContent();
 
     createButton("DELETE", "click", (e) => deleteBookCard(e), bookCard);
     const toggleReadStatusButton = createButton(
@@ -100,17 +100,6 @@ function iterateAndDisplayBooks() {
       bookCard
     );
   }
-}
-
-function setupBookCard(bookIndex) {
-  const bookCard = document.createElement("div");
-  bookCard.setAttribute("id", `${bookIndex}`);
-  bookCard.textContent = `${myLibrary[bookIndex].info()}`;
-  libraryContainer.appendChild(bookCard);
-}
-
-function selectBookCard(bookIndex) {
-  return document.getElementById(`${bookIndex}`);
 }
 
 function deleteBookCard(e) {
@@ -151,11 +140,11 @@ function createButton(
   return { element, setContent };
 }
 
-// function createBookCard(bookIndex) {
-//   const element = document.createElement("div");
-//   element.setAttribute("id", `${bookIndex}`);
-//   element.textContent = `${myLibrary[bookIndex].info()}`;
-//   libraryContainer.appendChild(element);
+function createBookCard(bookIndex) {
+  const element = document.createElement("div");
+  element.setAttribute("id", `${bookIndex}`);
+  element.textContent = `${myLibrary[bookIndex].info()}`;
+  libraryContainer.appendChild(element);
 
-//   return {element, }
-// }
+  return { element };
+}
