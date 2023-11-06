@@ -6,9 +6,10 @@ const libraryContainer = document.querySelector("#library-container");
 
 const newBookButton = createButton(
   "NEW BOOK",
+  "new-book-button",
   "click",
   openBookForm,
-  document.body
+  document.querySelector("main")
 );
 
 const bookDialog = document.querySelector("#bookDialog");
@@ -91,9 +92,10 @@ function iterateAndDisplayBooks() {
     const targetBook = myLibrary[bookIndex];
     const bookReadStatus = targetBook.getReadButtonContent();
 
-    createButton("DELETE", "click", (e) => deleteBookCard(e), bookCard);
+    createButton("DELETE", null, "click", (e) => deleteBookCard(e), bookCard);
     const toggleReadStatusButton = createButton(
       bookReadStatus,
+      null,
       "click",
       () =>
         changeBookCardReadState(targetBook, toggleReadStatusButton, bookCard),
@@ -124,12 +126,16 @@ function openBookForm() {
 
 function createButton(
   initialContent,
+  id,
   buttonEvent,
   functionExpression,
   parentNode
 ) {
   const element = document.createElement("button");
   element.textContent = initialContent;
+  if (id !== null) {
+    element.setAttribute("id", `${id}`);
+  }
   element.addEventListener(buttonEvent, functionExpression);
   parentNode.appendChild(element);
 
@@ -142,6 +148,7 @@ function createButton(
 
 function createBookCard(bookIndex) {
   const element = document.createElement("div");
+  element.classList.add("book-card");
   element.setAttribute("id", `${bookIndex}`);
   element.textContent = `${myLibrary[bookIndex].info()}`;
   libraryContainer.appendChild(element);

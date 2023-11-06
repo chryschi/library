@@ -7,39 +7,44 @@
     <script src="script.js" defer></script>
   </head>
   <body>
-    <div id="library-container"></div>
-    <dialog id="bookDialog">
-      <form>
-        <label for="book_title">Title</label>
-        <input type="text" id="book_title" name="title" />
+    <header>
+      <h1>My Library</h1>
+    </header>
+    <main>
+      <div id="library-container"></div>
+      <dialog id="bookDialog">
+        <form>
+          <label for="book_title">Title</label>
+          <input type="text" id="book_title" name="title" />
 
-        <label for="book_author">Author</label>
-        <input type="text" id="book_author" name="author" />
+          <label for="book_author">Author</label>
+          <input type="text" id="book_author" name="author" />
 
-        <label for="number_pages">Pages</label>
-        <input type="number" id="number_pages" name="numberOfPages" />
+          <label for="number_pages">Pages</label>
+          <input type="number" id="number_pages" name="numberOfPages" />
 
-        <p>Read?</p>
+          <p>Read?</p>
 
-        <div>
-          <input type="radio" id="book_read" name="wasRead" value="true" />
-          <label for="book_read">Yes</label>
-        </div>
-        <div>
-          <input
-            type="radio"
-            id="book_not_read"
-            name="wasRead"
-            value="false"
-            checked
-          />
-          <label for="book_not_read">No</label>
-        </div>
-        <div>
-          <button value="cancel" formmethod="dialog">Cancel</button>
-          <button type="button" id="addBookButton">ADD BOOK</button>
-        </div>
-      </form>
-    </dialog>
+          <div>
+            <input type="radio" id="book_read" name="wasRead" value="true" />
+            <label for="book_read">Yes</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="book_not_read"
+              name="wasRead"
+              value="false"
+              checked
+            />
+            <label for="book_not_read">No</label>
+          </div>
+          <div>
+            <button value="cancel" formmethod="dialog">Cancel</button>
+            <button type="button" id="addBookButton">ADD BOOK</button>
+          </div>
+        </form>
+      </dialog>
+    </main>
   </body>
 </html>

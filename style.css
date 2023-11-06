@@ -1,0 +1,85 @@
+:root {
+  --main-background: #dadada;
+  --header-background: #499385;
+  --book-card-background: #cf7e7e;
+  --button-color: #39f199;
+
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+
+  background-color: var(--main-background);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: var(--header-background);
+  display: flex;
+  justify-content: center;
+}
+
+header > h1 {
+  color: var(--main-background);
+}
+
+main {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#library-container {
+  margin: 50px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.book-card {
+  padding: 10px;
+
+  background-color: var(--book-card-background);
+  height: 150px;
+  width: 124px;
+}
+
+#new-book-button {
+  padding: 20px;
+  width: 100px;
+  height: 100px;
+
+  margin-top: auto;
+  align-self: flex-end;
+
+  border: none;
+  border-radius: 50%;
+
+  font-weight: bold;
+  color: black;
+  background-color: var(--button-color);
+
+  box-shadow: 4px 3px 17px rgba(150, 38, 38, 0.4);
+}
+
+#new-book-button:hover {
+  mix-blend-mode: difference;
+  box-shadow: none;
+}
+
+#new-book-button:active {
+  mix-blend-mode: exclusion;
+  width: 95px;
+  height: 95px;
+  box-shadow: none;
+}
